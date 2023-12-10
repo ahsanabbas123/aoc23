@@ -29,12 +29,17 @@ fn calculate_calibration(line: String) -> u32 {
         }
     }
     let calibration_value: u32 = st * 10 + end;
-    println!("Calibration value for line {} is {}", line, calibration_value);
+    println!(
+        "Calibration value for line {} is {}",
+        line, calibration_value
+    );
     calibration_value
 }
 
-fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>> 
-    where P: AsRef<Path>, {
-        let file = File::open(filename)?;
-        Ok(io::BufReader::new(file).lines())
+fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
+where
+    P: AsRef<Path>,
+{
+    let file = File::open(filename)?;
+    Ok(io::BufReader::new(file).lines())
 }

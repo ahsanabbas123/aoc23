@@ -3,7 +3,7 @@ use std::io::{self, BufRead};
 use std::path::Path;
 
 fn main() {
-    println!("Solution for Day {}", 1);
+    println!("Solution for Day {}", 1.2);
     let filename: String = "./src/input.txt".to_string();
     let mut total_calibration_value: u32 = 0;
     if let Ok(lines) = read_lines(filename) {
