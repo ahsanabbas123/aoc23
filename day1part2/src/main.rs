@@ -20,71 +20,55 @@ fn calculate_calibration(line: String) -> u32 {
     let mut end: u32 = 0;
     let mut start_set: bool = false;
     let mut found_digit: bool = false;
-    
-    //one two three four five six seven eight nine 
+
+    //one two three four five six seven eight nine
     println!("Line {}", line);
     for (i, c) in line.to_lowercase().chars().enumerate() {
-        if c.is_numeric()  {
+        if c.is_numeric() {
             end = c.to_digit(10).unwrap();
             found_digit = true;
-        } else if c == 'o' {
+        } else {
             if let Some(substring) = line.get(i..i + 3) {
                 if substring == "one" {
+                    found_digit = true;
                     end = 1;
+                } else if substring == "two" {
                     found_digit = true;
-                }
-            }
-        } else if c == 't' {
-            if let Some(substring) = line.get(i..i + 3) {
-                if substring == "two" {
                     end = 2;
+                } else if substring == "six" {
                     found_digit = true;
-                }
-            } 
-            if let Some(substring) = line.get(i..i + 5) {
-                if substring == "three" {
-                    end = 3;
-                    found_digit = true;
+                    end = 6;
                 }
             }
-        } else if c == 'f' {
             if let Some(substring) = line.get(i..i + 4) {
                 if substring == "four" {
+                    found_digit = true;
                     end = 4;
-                    found_digit = true;
                 } else if substring == "five" {
-                    end = 5;
                     found_digit = true;
+                    end = 5;
+                } else if substring == "nine" {
+                    found_digit = true;
+                    end = 9;
                 }
             }
-        } else if c == 's' {
-            if let Some(substring) = line.get(i..i + 3) {
-                if substring == "six" {
-                    end = 6;
-                    found_digit = true;
-                } 
-            } 
             if let Some(substring) = line.get(i..i + 5) {
-                if substring == "seven" {
+                if substring == "three" {
+                    found_digit = true;
+                    end = 3;
+                } else if substring == "seven" {
+                    found_digit = true;
                     end = 7;
+                } else if substring == "eight" {
                     found_digit = true;
-                } 
-            }
-        } else if c == 'e' {
-            if let Some(substring) = line.get(i..i + 5) {
-                if substring == "eight" {
                     end = 8;
+                } else if substring == "nine" {
                     found_digit = true;
-                } 
-            } 
-        } else if c == 'n' {
-            if let Some(substring) = line.get(i..i + 4) {
-                if substring == "nine" {
                     end = 9;
-                    found_digit = true;
-                } 
-            } 
-        } 
+                }
+            }
+        }
+
         if found_digit && !start_set {
             st = end;
             start_set = true;
@@ -92,12 +76,17 @@ fn calculate_calibration(line: String) -> u32 {
         found_digit = false;
     }
     let calibration_value: u32 = st * 10 + end;
-    println!("Calibration value for line {} is {}", line, calibration_value);
+    println!(
+        "Calibration value for line {} is {}",
+        line, calibration_value
+    );
     calibration_value
 }
 
-fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>> 
-    where P: AsRef<Path>, {
-        let file = File::open(filename)?;
-        Ok(io::BufReader::new(file).lines())
+fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>
+where
+    P: AsRef<Path>,
+{
+    let file = File::open(filename)?;
+    Ok(io::BufReader::new(file).lines())
 }
